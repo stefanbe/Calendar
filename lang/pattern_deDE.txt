@@ -1,0 +1,34 @@
+# für die Vorlage "dates"
+cal_date                = Datum
+cal_date_event          = Uhrzeit
+cal_title               = Titel
+cal_inhalt              = Beschreibung
+cal_color               = Legende:
+cal_color1              = normal
+cal_color2              = wichtig
+cal_color3              = sehr wichtig
+cal_ort                 = Ort
+cal_date_format_liste   = l j, H:i
+cal_date_format_title   = j. F Y
+cal_date_format_event   = H:i
+cal_event_title         = Termin vom
+cal_events_title        = Termine vom
+cal_event_link          = Termin
+cal_events_link         = Termine
+cal_list_title          = Alle Termine von {PARAM1} bis {PARAM2}
+cal_events_error        = Keine Termine Vorhanden
+cal_archive             = Archiv
+
+
+# für die Vorlage "news"
+news_date               = Datum
+news_title              = Titel
+news_anleser            = Anleser
+news_file               = Inhaltsseite
+news_news               = Aktuelle News
+news_archive            = Archiv
+news_events_error       = Keine Neuen News Vorhanden
+news_event_error        = Keine News Vorhanden
+news_date_format_new    = j. F Y
+news_date_format_liste  = d.m.Y
+

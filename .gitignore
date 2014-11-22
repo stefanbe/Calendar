@@ -1,0 +1,35 @@
+# Calendar
+*.*
+!.gitignore
+!README.md
+!index.php
+!dateClass.php
+!datenClass.php
+
+*/
+!addons/
+!addons/*
+!admin/
+!admin/admin_plugin.css
+!admin/cal_admin.js
+!admin//index.php
+!admin/test_strtotime.php
+!lang/
+!lang/*
+!pattern/
+!pattern/dates.css
+!pattern/dates.htm
+!pattern/dates.php
+!pattern/news.css
+!pattern/news.htm
+!pattern/news.php
+
+# algemein
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db

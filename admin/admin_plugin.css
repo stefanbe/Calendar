@@ -1,0 +1,18 @@
+
+/* Plugin Admin CSS */
+
+
+.ca-admin-input-date-error {
+    background-color: #FF6A6A;
+}
+
+.ca-admin-button {
+    border: none;
+    background-color: transparent;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    margin: 0 .8em 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+}

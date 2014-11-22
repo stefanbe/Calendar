@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Calendar Vorlage Erstellen</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            pre, h2, ul { margin:0; }
+            span { color:#8600B3; }
+        </style>
+    </head>
+    <body>
+<h2>Calendar Vorlage Erstellen</h2>
+<br />
+Die Vorlagen sind im Ordner <b>pattern/</b><br />
+<br />
+$this->language = Der Inhalt von pattern_????.txt<br />
+<br />
+Eine Vorlage besteht aus:
+<ul>
+<li>MeinPattern.php = Die Volagen Datei.</li>
+<li>MeinPattern.css = Vorlagen Syles (Optinal).</li>
+<li>MeinPattern.htm = Eine Liste für den Admin-Info mit den Funktonen und den Parametern dazu (Optinal).</li>
+</ul>
+<br />
+<h3>Aufbau der Vorlagen Datei</h3>
+<pre><b># Wie bei denn Plugins ist der Classname gleich auch der Dateiname</b>
+<span>class</span> MeinPattern <span>extends</span> CalDate {
+
+    <b># Da werden die Zellen der Datenbank festgelegt. Als erstes ist immer das Datum.</b>
+    public $datenCols = array("{CAL_DATE}","{CAL_TITLE}","{CAL_TEXT}","{CAL_ORT}","{CAL_COLOR}");
+
+    private $datenColAdmin = array();
+    private $adminTemplate = NULL;
+
+    <b># Optionale Funktion die aus dem Admin Aufgerufen wird</b>
+    <span>function</span> admin_init() {
+
+        <b># Das sind die Formular Elemente für den Admin. Die Reienfolge entspricht den $datenCols</b>
+        $this->datenColAdmin[] = '&lt;input type="text" name="event[CAL_DATE]" value="{CAL_DATE}" />';
+        $this->datenColAdmin[] = '&lt;input type="text" name="event[CAL_TITLE]" value="{CAL_TITLE}" />';
+        $this->datenColAdmin[] = '&lt;textarea name="event[CAL_TEXT]">{CAL_TEXT}&lt;/textarea>';
+        $this->datenColAdmin[] = '&lt;input type="text" name="event[CAL_ORT]" value="{CAL_ORT}" />';
+        $this->datenColAdmin[] = '&lt;select name="event[CAL_COLOR]">'
+            .'&lt;option value="cal-color1" selected="selected">cal-color1&lt;/option>'
+            .'&lt;option value="cal-color2">cal-color2&lt;/option>'
+            .'&lt;option value="cal-color3">cal-color3&lt;/option>'
+        .'&lt;/select>';
+
+        <b># Demo Code</b>
+        $this->adminTemplate = '&lt;table cellspacing="0" border="0" cellpadding="0">&lt;tbody>'
+            .'&lt;tr>'
+                .'&lt;td style="width:1%;">'.$this->language->getLanguageValue("cal_date").'&lt;/td>'
+                .'&lt;td style="width:1%;">{CAL_DATE}&lt;/td>'
+                .'&lt;td style="width:1%;">'.$this->language->getLanguageValue("cal_ort").'&lt;/td>'
+                .'&lt;td>{CAL_ORT}&lt;/td>'
+                .'&lt;td style="width:1%;" class="cal-nowrap">'.$this->language->getLanguageValue("cal_color").'&lt;/td>'
+                .'&lt;td style="width:1%;">{CAL_COLOR}&lt;/td>'
+            .'&lt;/tr>&lt;tr>'
+                .'&lt;td>'.$this->language->getLanguageValue("cal_title").'&lt;/td>'
+                .'&lt;td colspan="5">{CAL_TITLE}&lt;/td>'
+            .'&lt;/tr>&lt;tr>'
+                .'&lt;td colspan="6">'.$this->language->getLanguageValue("cal_inhalt").'&lt;br />'
+                .'{CAL_TEXT}&lt;/td>'
+            .'&lt;/tr>'
+        .'&lt;/tbody>&lt;/table>';
+    }
+
+    <b># Optionale Funktion die aus dem Plugin Aufgerufen wird</b>
+    <span>function</span> front_init() {
+    }
+
+    <b># Eine Funktion die mit hilfe des Plugin Parameters Aufgerufen wird.
+    # Die ??? sind Platzhalter für den Funktions name.</b>
+    <span>function</span> template_???() {
+    }
+
+    <b># Pflicht Funktion die aus dem Admin Aufgerufen wird für das Event.
+    # Der Parameter ist das Event aus der Datenbank.</b>
+    <span>function</span> template_admin_event($event) {
+
+        <b># Demo Code</b>
+        $replace = array();
+        foreach($this->datenCols as $i => $search) {
+            if($i === 4) {
+                $this->datenColAdmin[$i] = str_replace(' selected="selected"',"",$this->datenColAdmin[$i]);
+                $replace[$i] = str_replace('value="'.$daten[$i].'"','value="'.$daten[$i].'" selected="selected"',$this->datenColAdmin[$i]);
+            } else
+                $replace[$i] = str_replace($search,$daten[$i],$this->datenColAdmin[$i]);
+        }
+        return str_replace($this->datenCols,$replace,$this->adminTemplate);
+    }
+
+    <b># Pflicht Funktion die aus dem Admin Aufgerufen wird für das Neue Event</b>
+    <span>function</span> template_admin_newevent() {
+
+        <b># Demo Code</b>
+        $event = str_replace($this->datenCols,$this->datenColAdmin,$this->adminTemplate);
+        return str_replace($this->datenCols,"",$event);
+    }
+}
+</pre>
+    </body>
+</html>

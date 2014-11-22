@@ -1,0 +1,28 @@
+delete_events_error     = Fehler konnte diese Daten <b>{PARAM1}</b> nicht Löschen.
+save_event_error        = Schreibrechte dieser Datenbank <b>{PARAM1}</b> Prüfen.
+error_date_empty        = Datum ist Lehr
+error_date_exists       = Datum gibts schon
+error_del_no_selectet   = Es wurde nichts zum Löschen Ausgewählt
+new_db_error_active     = der Name "active" darf nicht Verwendet werden.
+new_db_error            = Fehler die Datenbank gibts schonn
+del_db_error            = Fehler die Datenbank gibts nicht
+post_event_data_error   = Fehlerhafte Daten
+pattern_error           = Fehlerhafte Vorlage
+
+new_text                = Neue Datenbank {PARAM1} mit diese Vorlage
+new_button              = Erstellen
+delete_button           = Active Datenbank löschen
+database_button         = Verwalten
+database_text           = Die Calendar Datenbanken Verwaltung (Anlegen, Löschen, Neue Einträge, Einträge ändern, Einträge Löschen).
+delete_old_button       = Alle Einträge die Älter {PARAM1} sind Löschen
+strtotime_button        = Testen
+strtotime_text          = Testen der Parameter für die PHP Funktion <b>strtotime</b> für den Plugin Parameter <b>from_to</b>.
+dialog_title            = strtotime Test
+dialog_button_test      = Testen
+dialog_button_close     = Schließen
+dialog_html             = <div><b>Beispiele:</b><br /><div style="padding-left:1.5em;"><b>Aktueller Tag -5 Monate</b> = -5 months 00:00<br /><b>Letzter Tag vom Monat</b> = last day of now 23:59<br /><b>Erster Tag -3 Monate</b> = first day of -3 months 00:00<br /><b>Erster Tag vom Jahr</b> = first day of january now  00:00<br /><b>Letzer Tag vom Jahr</b> = last day of december now 23:59<br /><br /></div><input style="width:400px;" type="text" name="strtotime" value="" size="70" maxlength="255" /><br /><br /><b>Ergebnis</b> = <span id="message_strtotime"></span><br /></div>
+
+info_text = <h2 style="margin:0;">Datenbank Verwaltungs infos:</h2><ul><li>Beim Erstellen von einer Neuen Datenbank wird eine Vohandene Datenbank Eingebunden wenn es sie noch nicht gibt.</li><li>Achtung "Aktive Datenbank löschen" die Aktive Datenbank wird Tatsächlich Gelöscht.</li><li>Die Checkbox in der Leiste "Datums Filter" selektiert alle Sichtbaren Einträge zum Löschen.</li><li>Um nur Einen zu Löschen einfach auf das Icon in dem jeweiligen Eintrag Klicken.</li></ul><br />Infos zum Erstellen einer Eigenen Vorlage (<a href="{PARAM2}lang/info_{PARAM1}.htm" target="_blank">im neuen Fenster öffnen</a>).<h2>Die Plugin Syntax</h2><h3 style="margin:0;">Die Pflicht Parameter:</h3><table style="margin-left:1em;" cellspacing="0" border="0" cellpadding="0"><tr><td style="width:1%;padding:0 .5em;"><b>Funktion</b></td><td style="padding:0 .5em;">Die Funktion aus der Vorlage (siehe weiter Unten) muss als erstes Stehen.</td></tr><tr><td style="padding:0 .5em;"><b>db=</b></td><td style="padding:0 .5em;">Die Datenbank.</td></tr></table><br /><h3 style="margin:0;">Die Optinalen Parameter:</h3><table style="margin-left:1em;" cellspacing="0" border="0" cellpadding="0"><tr style="text-decoration:underline;"><th style="width:1%;text-align:left;vertical-align:top;padding:.2em .5em;">Parameter</th><th style="width:1%;text-align:left;vertical-align:top;padding:.2em .5em;">Inhalt</th><th style="text-align:left;vertical-align:top;padding:.2em .5em;">Beschreibung</th></tr><tr><td style="text-align:left;vertical-align:top;padding:0 .5em;"><b>show_nav=</b></td><td style="text-align:left;vertical-align:top;padding:0 .5em;">false/true</td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Default=true. Die Navigation für Vorheriges/Nächstes Jahr oder Monat.</td></tr><tr><td style="text-align:left;vertical-align:top;padding:0 .5em;"><b>show_weeknr=</b></td><td style="text-align:left;vertical-align:top;padding:0 .5em;">false/true</td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Default=true. Wochen Nr. Anzeigen.</td></tr><tr><td style="text-align:left;vertical-align:top;padding:0 .5em;"><b>show_in=</b></td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Inhaltsseite</td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Default="Aktuelle Inhaltsseite". Das ist für die Funktion <b>events</b> wenn jemand kein Javascript hat, Erscheint da dann der Termin</td></tr><tr><td style="text-align:left;vertical-align:top;padding:0 .5em;"><b>cols=</b></td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Zahl</td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Default=3. Die Spalten für die Monate in der Jahres Ansicht.</td></tr><tr><td style="text-align:left;vertical-align:top;padding:0 .5em;"><b>from_to=</b></td><td style="text-align:left;vertical-align:top;padding:0 .5em;white-space:nowrap;">min,max,strtotime</td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Default=min|max. Das Trenn Zeichen ist "|" (Optional). Es werden die Einträge von|bis mit dem Neusten zuerst Angezeigt. Um den Ältesten zuerst Anzuzeigen einfach von|bis Vertauschen. Mit "strtotime" sind die Parameter für die PHP Funktion "strtotime" gemeint.</td></tr><tr><td style="text-align:left;vertical-align:top;padding:0 .5em;"><b>maxlen=</b></td><td style="text-align:left;vertical-align:top;padding:0 .5em;">Zahl</td><td style="text-align:left;vertical-align:top;padding:0 .5em;">vom Neusten bis (Zahl) Anzeigen. Eine Negative Zahl Sortiert die Anzeige um.</td></tr></table><br /><h3 style="margin:0;">Auflistung der Vorlagen mit den Funktionen und den Zulässigen Parametern:</h3>
+info_text_pattern = <span style="padding-left:1.5em;">Die Vorlage <b>{PARAM1}</b>:</span>{PARAM2}<br />
+info_revision = Revision: {PARAM1}
+info_description = Plugin Parameter
