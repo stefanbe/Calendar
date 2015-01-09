@@ -11,7 +11,8 @@ class CalDate extends CalDaten {
             "func" => false,
             "db" => false,
             "from" => false,
-            "to" => false
+            "to" => false,
+            "index" => false
         );
 
     function CalDate_init($value_array) {
@@ -30,6 +31,7 @@ class CalDate extends CalDaten {
             if($this->para[$key] === "false")
                 $this->para[$key] = false;
         }
+
         if(!$this->para["func"])
             $this->para["func"] = trim($value_array[0]);
 

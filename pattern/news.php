@@ -80,7 +80,6 @@ class news extends CalDate {
         global $CatPage;
 
         $html = "";
-
         $date_format = $this->language->getLanguageValue("news_date_format_new");
         foreach($this->get_From_To_Date_Cols($this->para["from"],$this->para["to"]) as $pos => $date) {
             $daten = $this->get_Daten_Pos($pos,$date_format);
@@ -88,6 +87,23 @@ class news extends CalDate {
             $html .= '<li><a href="'.$CatPage->get_Href($cat,$page).'"><span class="news-nowrap news-list-small-date">'.$daten[0].'</span><span class="news-list-small-news">'.$daten[1].'</span></a></li>';
         }
         if(strlen($html) < 10)
+            $html = '<li>'.$this->language->getLanguageValue("news_events_error").'</li>';
+        return '<table class="news-list-small" cellspacing="0" border="0" cellpadding="0"><thead><tr><th>'.$this->language->getLanguageValue("news_news").'</th></tr></thead><tbody><tr><td><ul>'.$html.'</ul></td></tr></tbody></table>';
+    }
+
+    function template_list_index() {
+        $news = $this->get_Daten_Array();
+        $pos = count($news) - $this->para["index"];
+        if($this->para["index"][0] == "-")
+            $pos = abs($this->para["index"]) - 1;
+
+        $date_format = $this->language->getLanguageValue("news_date_format_new");
+        $daten = $this->get_Daten_Pos($pos,$date_format);
+        if($daten[0]) {
+            global $CatPage;
+            list($cat,$page) = $CatPage->split_CatPage_fromSyntax($daten[3]);
+            $html = '<li><a href="'.$CatPage->get_Href($cat,$page).'"><span class="news-nowrap news-list-small-date">'.$daten[0].'</span><span class="news-list-small-news">'.$daten[1].'</span></a></li>';
+        } else
             $html = '<li>'.$this->language->getLanguageValue("news_events_error").'</li>';
         return '<table class="news-list-small" cellspacing="0" border="0" cellpadding="0"><thead><tr><th>'.$this->language->getLanguageValue("news_news").'</th></tr></thead><tbody><tr><td><ul>'.$html.'</ul></td></tr></tbody></table>';
     }
