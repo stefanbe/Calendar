@@ -47,13 +47,13 @@ class Calendar extends Plugin {
             $tmpl_ob->CalDate_init($value_array);
 
             $tmpl_ob->is_ajax = false;
+            global $syntax;
             if($get_ajax) {
                 $tmpl_ob->is_ajax = true;
-                echo $tmpl_ob->$get_ajax();
+                echo $syntax->convertContent($tmpl_ob->$get_ajax(), false);
                 exit;
             }
             if(is_file($this->PLUGIN_SELF_DIR.'pattern/'.$pattern.'.css')) {
-                global $syntax;
                 $syntax->insert_in_head('<style type="text/css"> @import "'.$this->PLUGIN_SELF_URL.'pattern/'.$pattern.'.css"; </style>');
             }
             return $tmpl_ob->$pattern_function();
