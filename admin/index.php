@@ -109,8 +109,7 @@ class CalAdmin {
                 .$this->Calendar_makeAdminNewEvent()
                 .$this->Calendar_makeAdminEvents()
                 .'</div>'
-                .'</div>'
-                .'<script type="text/javascript" src="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/admin/cal_admin.js"></script>';
+                .'</div>';
         }
         return $html;
     }
@@ -250,7 +249,7 @@ class CalAdmin {
 
         $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/addons/timepicker/jquery-ui-timepicker-addon.css" />';
         $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript" src="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/addons/timepicker/jquery-ui-timepicker-addon.js"></script>';
-        $PLUGIN_ADMIN_ADD_HEAD[] = '<script language="Javascript" type="text/javascript">/*<![CDATA[*/'
+        $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript">/*<![CDATA[*/'
             .'var mo_date_timepicker = {
                 closeText: "'.$this->tmpl_ob->lang['timepicker']['closeText'].'",
                 prevText: "'.$this->tmpl_ob->lang['timepicker']['prevText'].'",
@@ -270,12 +269,15 @@ class CalAdmin {
             .'};'
         .'/*]]>*/</script>';
 
-        $PLUGIN_ADMIN_ADD_HEAD[] = '<script language="Javascript" type="text/javascript">/*<![CDATA[*/'
+        $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript">/*<![CDATA[*/'
                             .'var cal_filter_text = "'."Datums ".getLanguageValue("filter_text").'";'
                             .'var cal_error_date_empty = "'.$this->language->getLanguageValue("error_date_empty").'";'
                             .'var cal_error_date_exists = "'.$this->language->getLanguageValue("error_date_exists").'";'
                             .'var cal_error_del_no_selectet = "'.$this->language->getLanguageValue("error_del_no_selectet").'";'
                             .'/*]]>*/</script>';
+
+        if($this->db)
+            $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript" src="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/admin/cal_admin.js"></script>';
     }
 
     function isPost($settings) {
