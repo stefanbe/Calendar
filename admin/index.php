@@ -39,7 +39,7 @@ class CalAdmin {
             }
         }
         foreach($settings->toArray() as $tmp_db => $tmp) {
-            if($tmp_db == "active")
+            if($tmp_db == "active" or $tmp_db == "plugin_replace_catpagefile")
                 continue;
             if(!is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$tmp_db.'_db.php'))
                 $settings->delete($tmp_db);
