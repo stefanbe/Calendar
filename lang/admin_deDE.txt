@@ -8,6 +8,8 @@ new_db_error            = Fehler die Datenbank gibts schonn
 del_db_error            = Fehler die Datenbank gibts nicht
 post_event_data_error   = Fehlerhafte Daten
 pattern_error           = Fehlerhafte Vorlage
+del_db_title            = Diese Datenbank Wirklich löschen?
+del_event_title         = Diese Einträge Wirklich löschen?
 
 new_text                = Neue Datenbank {PARAM1} mit diese Vorlage
 new_button              = Erstellen

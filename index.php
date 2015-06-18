@@ -121,7 +121,7 @@ class Calendar extends Plugin {
         # nur eine Sprache ---------------------------------
         $info = array(
             // Plugin-Name + Version
-            "<b>Calendar</b> ".$this->adminLang->getLanguageValue("info_revision","7"),
+            "<b>Calendar</b> ".$this->adminLang->getLanguageValue("info_revision","8"),
             // moziloCMS-Version
             "2.0",
             // Kurzbeschreibung nur <span> und <br /> sind erlaubt

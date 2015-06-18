@@ -1,3 +1,32 @@
+function cal_deldb() {
+    dialog_multi.dialog({
+        title: del_db_title,
+        buttons: [{
+            text: mozilo_lang["yes"],
+            click: function() { $('form[name="deldb"]').trigger('submit'); }
+        },{
+            text: mozilo_lang["no"],
+            click: function() { dialog_multi.dialog("close"); }
+    }]});
+}
+
+function cal_delevent() {
+    dialog_multi.dialog({
+        title: del_event_title,
+        buttons: [{
+            text: mozilo_lang["yes"],
+            click: function() { $('form[name="event-form-delete"]').trigger('submit'); }
+        },{
+            text: mozilo_lang["no"],
+            click: function() {
+                $('.ev-search-item .js-event-del').each(function(){
+                    $('form[name="event-form-delete"] input[name="event['+$(this).val()+']"]').val("false");
+                });
+                dialog_multi.dialog("close");
+            }
+    }]});
+}
+
 $(function() {
 
     $('.catpageselect').multiselect({
@@ -22,6 +51,7 @@ $(function() {
         filter_text: cal_filter_text,
         filter_action: "calendar"
     });
+/*
 
     $('form[name="event-form-delete"]').appendTo('.js-mofilterplugin').submit(function(e){
         var no_delete = true;
@@ -33,6 +63,28 @@ $(function() {
             e.preventDefault();
             dialog_open("error_messages",returnMessage(false, cal_error_del_no_selectet));
         }
+    });
+*/
+    $('form[name="event-form-delete"]').appendTo('.js-mofilterplugin');
+    $('button[name="admin_event_delete_button"]').click(function(e){
+        e.preventDefault();
+        var no_delete = true;
+        var content = "";
+        $('.ev-search-item:visible .js-event-del:checked').each(function(){
+            no_delete = false;
+            $('form[name="event-form-delete"] input[name="event['+$(this).val()+']"]').val("true");
+            content += '<b>' + $(this).val() + '</b><br />';
+        });
+        if(no_delete) {
+            dialog_open("error_messages",returnMessage(false, cal_error_del_no_selectet));
+        } else {
+            dialog_open("cal_delevent",content);
+        }
+    });
+
+    $('form[name="deldb"] input[type="submit"]').click(function(e){
+        e.preventDefault();
+        dialog_open("cal_deldb",'<b>' + $('form[name="deldb"] input[name="deldb"]').val() + '</b>');
     });
 
     $('form[name="event-form-delete-old"]').appendTo('.js-mofilterplugin');

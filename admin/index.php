@@ -185,7 +185,7 @@ class CalAdmin {
                     .'<input type="hidden" name="ispost" value="true" />'
                     .'<div class="align-right ui-state-default ui-corner-top ui-helper-clearfix mo-li-head-tag-no-ul mo-li-head-tag mo-tag-height-from-icon mo-middle">'
                         .'<button type="submit" name="admin_event_save" value="'.$date.'" class="ca-admin-button mo-icons-icon mo-icons-save">&nbsp;</button>'
-                        .'<button type="submit" name="admin_event_delete_all" value="'.$date.'" class="ca-admin-button mo-icons-icon mo-icons-delete">&nbsp;</button>'
+                        .'<button type="submit" name="admin_event_delete_button" value="'.$date.'" class="ca-admin-button mo-icons-icon mo-icons-delete">&nbsp;</button>'
                         .'<input type="checkbox" class="mo-checkbox js-event-del" name="admin_event_delete['.$pos.']" value="'.$date.'" />'
                     .'</div>'
                     .'<div class="ui-widget-content ui-corner-all" style="margin:.4em;">'
@@ -199,9 +199,10 @@ class CalAdmin {
         # events löschen wird mit jq ins filter div verschoben
         $html .= '<form name="event-form-delete" action="'.PLUGINADMIN_GET_URL.'&amp;cal='.$this->db.'" method="post">'
             .'<input type="hidden" name="ispost" value="true" />'
+            .'<input type="hidden" name="admin_event_delete_all" value="true" />'
             .$delete_inputs
             .'<input style="float:right" type="checkbox" class="mo-checkbox" id="cal-select-all" />'
-            .'<button style="float:right" type="submit" value="true" name="admin_event_delete_all" class="ca-admin-button mo-icons-icon mo-icons-delete">&nbsp;</button>'
+            .'<button style="float:right" type="submit" value="true" name="admin_event_delete_button" class="ca-admin-button mo-icons-icon mo-icons-delete">&nbsp;</button>'# button submit
         .'</form>';
 /*
         $html .= '<form name="event-form-delete-old" action="'.PLUGINADMIN_GET_URL.'&amp;cal='.$this->db.'" method="post">'
@@ -274,6 +275,8 @@ class CalAdmin {
                             .'var cal_error_date_empty = "'.$this->language->getLanguageValue("error_date_empty").'";'
                             .'var cal_error_date_exists = "'.$this->language->getLanguageValue("error_date_exists").'";'
                             .'var cal_error_del_no_selectet = "'.$this->language->getLanguageValue("error_del_no_selectet").'";'
+                            .'var del_db_title = "'.$this->language->getLanguageValue("del_db_title").'";'
+                            .'var del_event_title = "'.$this->language->getLanguageValue("del_event_title").'";'
                             .'/*]]>*/</script>';
 
         if($this->db)
