@@ -1,0 +1,257 @@
+.cal-box {
+    font-size:.8em;
+    line-height:1em;
+    color:#000;
+}
+
+.cal-box td, .cal-box th {
+    vertical-align:middle;
+    text-align:center;
+}
+
+.cal-box a {
+    text-decoration : none;
+}
+
+.cal-year {
+    width:1%;
+    border-collapse:separate;
+}
+
+.cal-year .cal-year-td {
+    border-width:0;
+    border-top-width:.4em;
+    border-left-width:.4em;
+    border-color:transparent;
+    border-style:solid;
+}
+
+.cal-year .cal-year-td-first {
+    border-left-width:0;
+}
+
+.cal-month_small, .cal-month, .cal-year .cal-td-nav table {
+    border-width:1px;
+    border-color:#DADADA;
+    border-style:solid;
+    border-collapse:separate;
+    border-spacing:.4em;
+    width:1%;
+}
+
+.cal-year .cal-td-nav table {
+    width:100%;
+    border-spacing:0;
+}
+
+.cal-year .cal-month_small {
+    width:100%;
+}
+
+.cal-year .cal-month_small .cal-td {
+    font-size:.9em;
+}
+
+.cal-month {
+    width:98%;
+}
+
+.cal-td-nav table,
+.cal-month,
+.cal-month div,
+.cal-month_small,
+.cal-month_small div,
+.cal-month_small a
+{
+    -moz-border-radius: .4em;
+    -webkit-border-radius: .4em;
+    -khtml-border-radius: .4em;
+    border-radius: .4em;
+}
+
+.cal-day-normal, .cal-day-holi, .cal-day-event, .cal-day-hidden {
+    display:block;
+    color:#000;
+    padding:.4em;
+}
+
+.cal-day-normal {
+    background-color:#00ff00;
+}
+
+.cal-day-holi {
+    background-color:#FFE941;
+}
+
+.cal-day-event {
+    background-color:#7465FF;
+}
+
+.cal-day-event a, a.cal-day-event {
+    font-size:1em;
+    font-weight: bold;
+    color:#000;
+}
+
+.cal-day-event a:hover, a.cal-day-event:hover {
+    color:#000;
+}
+
+.cal-day-hidden {
+    background-color:#CCCCCC;
+    color:transparent;
+}
+
+.cal-title-week-nr {
+    font-weight: normal;
+    color: transparent;
+}
+
+.cal-month td.cal-td div {
+    text-align:left;
+    vertical-align:top;
+    height:3em;
+}
+
+/*1=oben, 2=rechts, 3=unten, 4=links*/
+.cal-month td.cal-td div a {
+    display:block;
+    margin:0 0 0 .4em;
+}
+
+.cal-month td.cal-week-nr div {
+    text-align:center;
+}
+
+.cal-td-nav a {
+    display:block;
+    font-size: 1.2em;
+    line-height:1em;
+    font-weight: bold;
+    padding:0 .2em;
+    margin:0 .2em 0 .2em;
+    color:#000;
+}
+
+.cal-navi-title {
+    font-weight: bold;
+    padding: .4em 0;
+}
+
+.cal-month .cal-td-nav table,
+.cal-month_small .cal-td-nav table {
+    border:none;
+    background-color:#00ff00;
+}
+
+.cal-list {
+    width:100%;
+    border-collapse:collapse;
+}
+
+.cal-list td, .cal-list th {
+    text-align:left;
+    vertical-align:top;
+    border-color:#DADADA;
+    border-width:1px;
+    border-style:solid;
+    padding:.4em;
+}
+/*
+.cal-list.cal-list-head th {
+    border-bottom:none;
+}
+*/
+
+.cal-list th {
+    font-weight: bold;
+}
+
+.cal-events {
+    border-collapse:collapse;
+    width:80%;
+}
+
+.cal-events td, .cal-events th {
+    text-align:left;
+    vertical-align:top;
+    border-color:#000000;
+    border-width:1px;
+    border-style:solid;
+    padding:.2em .4em;
+}
+
+.cal-events .cal-events-first {
+    width:1%;
+}
+
+.cal-list-archiv {
+    width:0%;
+    border:1px solid silver;
+}
+
+.cal-list-archiv th {
+    background-color:#C6C6C6;
+    padding:.2em .4em .2em .4em;
+}
+
+.cal-list-archiv td {
+    padding:0 .4em .2em .4em;
+}
+
+.cal-list-archiv a, .cal-list-archiv a:hover, .cal-list-archiv a:visited {
+    text-decoration:none;
+    color:#000000;
+    font-weight:normal;
+}
+
+a.cal-event-active  {
+    font-weight:bold;
+}
+
+.cal-dialog-shadow {
+    -webkit-box-shadow: .2em .2em .4em rgba(0,0,0,0.6);
+    -moz-box-shadow: .2em .2em .4em rgba(0,0,0,0.6);
+    box-shadow: .2em .2em .4em rgba(0,0,0,0.6);
+}
+
+.cal-dialog-shadow .cal-events {
+    width:500px;
+}
+
+.cal-nowrap {
+    white-space:nowrap;
+}
+
+.cal-admin-event {
+    width:100%;
+}
+
+.cal-admin-event td {
+    padding:.4em;
+}
+
+.cal-admin-event input,.cal-admin-event textarea {
+    width:10em;
+    line-height:1.4em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin:0;
+    border:1px solid silver;
+    padding:.1em .2em;
+}
+
+.cal-admin-event .cal-admin-text {
+    width:100%;
+}
+
+.cal-admin-event textarea {
+    height:3.2em;
+}
+
+.cal-admin-newevent textarea {
+    height:6.8em;
+}
+
+

@@ -1,0 +1,10 @@
+news_date               = Datum
+news_title              = Titel
+news_anleser            = Anleser
+news_file               = Inhaltsseite
+news_news               = Aktuelle News
+news_archive            = Archiv
+news_events_error       = Keine Neuen News Vorhanden
+news_event_error        = Keine News Vorhanden
+news_date_format_new    = j. F Y
+news_date_format_liste  = d.m.Y

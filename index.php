@@ -40,7 +40,7 @@ class Calendar extends Plugin {
                     or ($get_ajax and !in_array($get_ajax,get_class_methods($pattern))))
                 return $this->adminLang->getLanguageHtml("pattern_error");
 
-            $tmpl_ob = new $pattern();
+            $tmpl_ob = new $pattern($pattern);
             $tmpl_ob->CalDaten_init($db);
             if(method_exists($tmpl_ob,'front_init'))
                 $tmpl_ob->front_init();
@@ -109,19 +109,24 @@ class Calendar extends Plugin {
 
     function getInfo() {
         global $ADMIN_CONF;
-        $this->adminLang = new Language($this->PLUGIN_SELF_DIR."lang/admin_".$ADMIN_CONF->get("language").".txt");
+        $tmp = $ADMIN_CONF->get("language");
+        $this->adminLang = new Language($this->PLUGIN_SELF_DIR."lang/admin_".$tmp.".txt");
 
-        $help = $this->adminLang->getLanguageValue("info_text",$ADMIN_CONF->get("language"),$this->PLUGIN_SELF_URL);
-        foreach(getDirAsArray($this->PLUGIN_SELF_DIR."pattern/",array(".htm")) as $file) {
-            if(is_file($this->PLUGIN_SELF_DIR."pattern/".substr($file,0,-4).".htm") and
-                    false !== ($txt = @file_get_contents($this->PLUGIN_SELF_DIR."pattern/".$file)))
-                $help .= $this->adminLang->getLanguageValue("info_text_pattern",substr($file,0,-4),$txt);
+        $help = $this->adminLang->getLanguageValue("info_text",$tmp,$this->PLUGIN_SELF_URL);
+
+        foreach(getDirAsArray($this->PLUGIN_SELF_DIR."pattern/","dir") as $dir) {
+            $file = false;
+            if(is_file($this->PLUGIN_SELF_DIR."pattern/".$dir."/info_".$tmp.".html"))
+                $file = $this->PLUGIN_SELF_DIR."pattern/".$dir."/info_".$tmp.".html";
+            elseif(is_file($this->PLUGIN_SELF_DIR."pattern/".$dir."/info_deDE.html"))
+                $file = $this->PLUGIN_SELF_DIR."pattern/".$dir."/info_deDE.html";
+            if($file and false !== ($txt = @file_get_contents($file)))
+                $help .= $this->adminLang->getLanguageValue("info_text_pattern",$dir,$txt);
         }
 
-        # nur eine Sprache ---------------------------------
         $info = array(
             // Plugin-Name + Version
-            "<b>Calendar</b> ".$this->adminLang->getLanguageValue("info_revision","8"),
+            "<b>Calendar</b> ".$this->adminLang->getLanguageValue("info_revision","9"),
             // moziloCMS-Version
             "2.0",
             // Kurzbeschreibung nur <span> und <br /> sind erlaubt

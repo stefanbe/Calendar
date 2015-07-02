@@ -1,0 +1,15 @@
+cal_date                = Datum
+cal_date_event          = Uhrzeit
+cal_title               = Titel
+cal_inhalt              = Beschreibung
+cal_ort                 = Ort
+cal_date_format_liste   = l j, H:i
+cal_date_format_title   = j. F Y
+cal_date_format_event   = H:i
+cal_event_title         = Termin vom
+cal_events_title        = Termine vom
+cal_event_link          = Termin
+cal_events_link         = Termine
+cal_list_title          = Alle Termine von {PARAM1} bis {PARAM2}
+cal_events_error        = Keine Termine Vorhanden
+cal_archive             = Archiv

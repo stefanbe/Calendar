@@ -59,7 +59,7 @@ class CalAdmin {
 
         if(is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/pattern/'.$this->pattern.'.php')) {
             require_once(PLUGIN_DIR_REL."Calendar/pattern/".$this->pattern.".php");
-            $this->tmpl_ob = new $this->pattern();
+            $this->tmpl_ob = new $this->pattern($this->pattern);
             if($this->db) {
                 $this->tmpl_ob->CalDaten_init($this->db);
                 if(method_exists($this->tmpl_ob,'admin_init'))

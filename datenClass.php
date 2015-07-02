@@ -13,7 +13,7 @@ class CalDaten {
     public $db;
     public $is_ajax;
 
-    function __construct() {
+    function __construct($pattern) {
         if(defined('IS_ADMIN') and IS_ADMIN) {
             global $ADMIN_CONF;
             $tmp = $ADMIN_CONF->get("language");
@@ -29,7 +29,7 @@ class CalDaten {
         else
             die();
 
-        $this->language = new Language(PLUGIN_DIR_REL."Calendar/lang/pattern_".$tmp.".txt");
+        $this->language = new Language(PLUGIN_DIR_REL."Calendar/pattern/".$pattern."/lang_".$tmp.".txt");
     }
 
     function CalDaten_init($db) {
