@@ -10,7 +10,9 @@ post_event_data_error   = Fehlerhafte Daten
 pattern_error           = Fehlerhafte Vorlage
 del_db_title            = Diese Datenbank Wirklich löschen?
 del_event_title         = Diese Einträge Wirklich löschen?
+pattern_db_error        = Die Datenbank past nicht zur Vorlage
 
+pattern_text            = Vorlage <b>{PARAM1}</b>
 new_text                = Neue Datenbank {PARAM1} mit diese Vorlage
 new_button              = Erstellen
 delete_button           = Active Datenbank löschen

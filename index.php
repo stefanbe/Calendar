@@ -3,10 +3,11 @@
 class Calendar extends Plugin {
 
     private $adminLang;
+    private $pluginName = "Calendar";
 
     function getContent($value) {
         global $lang, $CMS_CONF;
-        $this->adminLang = new Language(PLUGIN_DIR_REL."Calendar/lang/admin_".$CMS_CONF->get("cmslanguage").".txt");
+        $this->adminLang = new Language($this->PLUGIN_SELF_DIR."lang/admin_".$CMS_CONF->get("cmslanguage").".txt");
 
         $value_array = $this->makeUserParaArray($value);
         $pattern_function = false;
@@ -77,7 +78,7 @@ class Calendar extends Plugin {
         .'<div class="mo-in-li-r"><input name="teststrtotime" type="button" value="'.$this->adminLang->getLanguageHtml("strtotime_button").'" onclick="dialog_test_strtotime(\'\')" /></div>'
         .'<script language="Javascript" type="text/javascript">/*<![CDATA[*/'
             .'function dialog_test_strtotime(para) {'
-                .'$.get("'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/admin/test_strtotime.php"+para,'
+                .'$.get("'.$this->PLUGIN_SELF_URL.'admin/test_strtotime.php"+para,'
                     .'function(data) {'
                         .'$("#message_strtotime").html(data);'
                         .'if(para.length < 1) {'
@@ -126,7 +127,7 @@ class Calendar extends Plugin {
 
         $info = array(
             // Plugin-Name + Version
-            "<b>Calendar</b> ".$this->adminLang->getLanguageValue("info_revision","9"),
+            '<b>'.$this->pluginName.'</b> '.$this->adminLang->getLanguageValue("info_revision","10"),
             // moziloCMS-Version
             "2.0",
             // Kurzbeschreibung nur <span> und <br /> sind erlaubt
@@ -136,7 +137,7 @@ class Calendar extends Plugin {
             // Download-URL
             array("http://www.mozilo.de/forum/index.php?action=media","Templates und Plugins"),
             // Platzhalter für die Selectbox in der Editieransicht 
-            array('{Calendar|}' => $this->adminLang->getLanguageValue("info_description"))
+            array('{'.$this->pluginName.'|}' => $this->adminLang->getLanguageValue("info_description"))
         );
         return $info;
     }

@@ -1,13 +1,13 @@
 <?php if(!defined('IS_ADMIN') or !IS_ADMIN) die();
 
-if(!is_dir(PLUGIN_DIR_REL."Calendar/dbs/")) {
-    $error = mkdirMulti(PLUGIN_DIR_REL."Calendar/dbs/");
+if(!is_dir($plugin->PLUGIN_SELF_DIR."dbs/")) {
+    $error = mkdirMulti($plugin->PLUGIN_SELF_DIR."dbs/");
     if($error !== true)
         return returnMessage(false, $error);
 }
 
-require_once(PLUGIN_DIR_REL."Calendar/datenClass.php");
-require_once(PLUGIN_DIR_REL."Calendar/dateClass.php");
+require_once($plugin->PLUGIN_SELF_DIR."datenClass.php");
+require_once($plugin->PLUGIN_SELF_DIR."dateClass.php");
 
 class CalAdmin {
     private $dbs = array();
@@ -18,30 +18,35 @@ class CalAdmin {
     private $calmessages;
     private $to_scroll = false;
     private $language;
+    private $PLUGIN_SELF_DIR;
+    private $PLUGIN_SELF_URL;
 
-    function CalAdmin($settings) {
+    function CalAdmin($settings,$PLUGIN_SELF_DIR,$PLUGIN_SELF_URL) {
+        $this->PLUGIN_SELF_DIR = $PLUGIN_SELF_DIR;
+        $this->PLUGIN_SELF_URL = $PLUGIN_SELF_URL;
+
         global $specialchars;
         global $ADMIN_CONF;
-        $this->language = new Language(PLUGIN_DIR_REL."Calendar/lang/admin_".$ADMIN_CONF->get("language").".txt");
-        foreach(scandir(PLUGIN_DIR_REL."Calendar/dbs/") as $file) {
+        $this->language = new Language($this->PLUGIN_SELF_DIR."lang/admin_".$ADMIN_CONF->get("language").".txt");
+        foreach(scandir($this->PLUGIN_SELF_DIR."dbs/") as $file) {
             if($file[0] != "." and strpos($file,"_db.php") !== false) {
                 $tmp = substr($file,0,-7);
                 if($settings->keyExists($tmp)
-                        and is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/pattern/'.$settings->get($tmp).'.php'))
+                        and is_file($this->PLUGIN_SELF_DIR.'pattern/'.$settings->get($tmp).'.php'))
                     $this->dbs[] = $tmp;
             }
         }
-        foreach(scandir(PLUGIN_DIR_REL."Calendar/pattern/") as $file) {
+        foreach(scandir($this->PLUGIN_SELF_DIR."pattern/") as $file) {
             if($file[0] != "." and strpos($file,".php") !== false) {
                 $tmp = substr($file,0,-4);
-                    if(is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/pattern/'.$tmp.'.php'))
+                    if(is_file($this->PLUGIN_SELF_DIR.'pattern/'.$tmp.'.php'))
                         $this->patterns[] = $tmp;
             }
         }
         foreach($settings->toArray() as $tmp_db => $tmp) {
             if($tmp_db == "active" or $tmp_db == "plugin_replace_catpagefile")
                 continue;
-            if(!is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$tmp_db.'_db.php'))
+            if(!is_file($this->PLUGIN_SELF_DIR.'dbs/'.$tmp_db.'_db.php'))
                 $settings->delete($tmp_db);
         }
         sort($this->dbs);
@@ -57,8 +62,8 @@ class CalAdmin {
         } elseif(count($this->patterns) > 0)
             $this->pattern = $this->patterns[0];
 
-        if(is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/pattern/'.$this->pattern.'.php')) {
-            require_once(PLUGIN_DIR_REL."Calendar/pattern/".$this->pattern.".php");
+        if(is_file($this->PLUGIN_SELF_DIR.'pattern/'.$this->pattern.'.php')) {
+            require_once($this->PLUGIN_SELF_DIR."pattern/".$this->pattern.".php");
             $this->tmpl_ob = new $this->pattern($this->pattern);
             if($this->db) {
                 $this->tmpl_ob->CalDaten_init($this->db);
@@ -83,7 +88,10 @@ class CalAdmin {
                 $curent_db = '&cal='.$this->db;
             $url = $_SERVER['HTTP_HOST'].str_replace("&amp;","&",PLUGINADMIN_GET_URL).$curent_db;
             # damit beim browserreload nicht wieder die daten gesendet werden senden wir eine get anfrage
-            header("Location: http://$url");
+            if(defined("HTTP"))
+                header("Location: ".HTTP.$url);
+            else
+                header("Location: http://$url");
             exit;
         }
         # es gab nee miteilung jetzt ausgeben da keine post anfrage
@@ -106,6 +114,7 @@ class CalAdmin {
             $html .= '<div class="ui-tabs ui-widget ui-widget-content ui-corner-all mo-ui-tabs" style="position:relative;margin-right:1em;">'
                 .$this->Calendar_makeAdminSubMenu()
                 .'<div class="plugins mo-ui-tabs-panel ui-widget-content ui-corner-bottom mo-no-border-top">'
+                .'<div class="mo-margin-top">'.$this->language->getLanguageValue("pattern_text",$this->pattern).'</div>'
                 .$this->Calendar_makeAdminNewEvent()
                 .$this->Calendar_makeAdminEvents()
                 .'</div>'
@@ -204,13 +213,6 @@ class CalAdmin {
             .'<input style="float:right" type="checkbox" class="mo-checkbox" id="cal-select-all" />'
             .'<button style="float:right" type="submit" value="true" name="admin_event_delete_button" class="ca-admin-button mo-icons-icon mo-icons-delete">&nbsp;</button>'# button submit
         .'</form>';
-/*
-        $html .= '<form name="event-form-delete-old" action="'.PLUGINADMIN_GET_URL.'&amp;cal='.$this->db.'" method="post">'
-            .'<input type="hidden" name="ispost" value="true" />'
-            .'<input type="hidden" name="admin_event_delete_old_events" value="true" />'
-            .'<input style="float:right;margin-right:2em;" type="submit" value="'.$this->language->getLanguageHtml("delete_old_button",date("Y-m-d")).'" />'
-        .'</form>';
-*/
         return $html;
     }
 
@@ -244,12 +246,12 @@ class CalAdmin {
 
     function insertHead() {
         global $PLUGIN_ADMIN_ADD_HEAD;
-        $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/admin/admin_plugin.css" />';
+        $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.$this->PLUGIN_SELF_URL.'admin/admin_plugin.css" />';
 
-        $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/pattern/'.$this->pattern.'.css" />';
+        $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.$this->PLUGIN_SELF_URL.'pattern/'.$this->pattern.'.css" />';
 
-        $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/addons/timepicker/jquery-ui-timepicker-addon.css" />';
-        $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript" src="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/addons/timepicker/jquery-ui-timepicker-addon.js"></script>';
+        $PLUGIN_ADMIN_ADD_HEAD[] = '<link type="text/css" rel="stylesheet" href="'.$this->PLUGIN_SELF_URL.'addons/timepicker/jquery-ui-timepicker-addon.css" />';
+        $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript" src="'.$this->PLUGIN_SELF_URL.'addons/timepicker/jquery-ui-timepicker-addon.js"></script>';
         $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript">/*<![CDATA[*/'
             .'var mo_date_timepicker = {
                 closeText: "'.$this->tmpl_ob->lang['timepicker']['closeText'].'",
@@ -280,7 +282,7 @@ class CalAdmin {
                             .'/*]]>*/</script>';
 
         if($this->db)
-            $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript" src="'.URL_BASE.PLUGIN_DIR_NAME.'/Calendar/admin/cal_admin.js"></script>';
+            $PLUGIN_ADMIN_ADD_HEAD[] = '<script type="text/javascript" src="'.$this->PLUGIN_SELF_URL.'admin/cal_admin.js"></script>';
     }
 
     function isPost($settings) {
@@ -293,17 +295,40 @@ class CalAdmin {
                 $this->calmessages .= returnMessage(false, $this->language->getLanguageValue("new_db_error_active"));
                 return;
             }
+
             $newdb = $specialchars->replaceSpecialChars($newdb,false);
-            if(!is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$newdb."_db.php")) {
+            $newpattern = $specialchars->replaceSpecialChars($newpattern,false);
+
+            if(is_file($this->PLUGIN_SELF_DIR.'pattern/'.$newpattern.'.php')) {
+                require_once($this->PLUGIN_SELF_DIR."pattern/".$newpattern.".php");
+                $tmpl_ob = new $newpattern($newpattern);
+            } else {
+                $this->calmessages .= returnMessage(false, $this->language->getLanguageValue("pattern_error"));
+                return;
+            }
+
+            if(!is_file($this->PLUGIN_SELF_DIR.'dbs/'.$newdb."_db.php")) {
                 global $page_protect;
-                $new = $page_protect.serialize(array());
+                $new = $page_protect.serialize(array("datenCols" => $tmpl_ob->datenCols));
                 $settings->set($newdb,$newpattern);
-                mo_file_put_contents(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$newdb."_db.php",$new);
+                mo_file_put_contents($this->PLUGIN_SELF_DIR.'dbs/'.$newdb."_db.php",$new);
                 $this->db = $newdb;
             } else {
-                if(is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$newdb."_db.php") and !$settings->keyExists($newdb)) {
-                    $settings->set($newdb,$newpattern);
-                    $this->db = $newdb;
+                if(is_file($this->PLUGIN_SELF_DIR.'dbs/'.$newdb."_db.php") and !$settings->keyExists($newdb)) {
+                    if(false === ($conf = @file_get_contents($this->PLUGIN_SELF_DIR.'dbs/'.$newdb."_db.php"))) {
+                        $this->calmessages .= returnMessage(false, $this->language->getLanguageValue("save_event_error",$newdb));
+                        return;
+                    }
+                    global $page_protect_search;
+                    $conf = str_replace($page_protect_search,"",$conf);
+                    $conf = trim($conf);
+                    $conf = unserialize($conf);
+                    if(isset($conf['datenCols']) and $conf['datenCols'] === $tmpl_ob->datenCols) {
+                        $settings->set($newdb,$newpattern);
+                        $this->db = $newdb;
+                    } else {
+                        $this->calmessages .= returnMessage(false, $this->language->getLanguageValue("pattern_db_error"));
+                    }
                 } else
                     $this->calmessages .= returnMessage(false, $this->language->getLanguageValue("new_db_error"));
             }
@@ -312,9 +337,9 @@ class CalAdmin {
         $deldb = getRequestValue("deldb","post");
         if($deldb !== false) {
             $deldb = $specialchars->replaceSpecialChars($deldb,false);
-            if(is_file(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$deldb."_db.php")) {
+            if(is_file($this->PLUGIN_SELF_DIR.'dbs/'.$deldb."_db.php")) {
                 $settings->delete($deldb);
-                unlink(BASE_DIR.PLUGIN_DIR_NAME.'/Calendar/dbs/'.$deldb."_db.php");
+                unlink($this->PLUGIN_SELF_DIR.'dbs/'.$deldb."_db.php");
             } else
                 $this->calmessages .= returnMessage(false, $this->language->getLanguageValue("del_db_error"));
         }
@@ -345,7 +370,7 @@ class CalAdmin {
     }
 } # end class
 
-$CalAdmin = new CalAdmin($plugin->settings);
+$CalAdmin = new CalAdmin($plugin->settings,$plugin->PLUGIN_SELF_DIR,$plugin->PLUGIN_SELF_URL);
 $CalAdmin->isPost($plugin->settings);
 return $CalAdmin->getAdminContent();
 ?>

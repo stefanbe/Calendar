@@ -54,8 +54,12 @@ class CalDaten {
         if(!is_array($conf))
             die("Fatal Error 2");
 
-        $this->daten = $conf;
+        if(!isset($conf['datenCols']) or $conf['datenCols'] !== $this->datenCols)
+            die("Fatal Error 3");
 
+        unset($conf['datenCols']);
+
+        $this->daten = $conf;
         unset($conf);
         $this->make_From_Daten_min_max_Year();
         return true;
@@ -66,6 +70,8 @@ class CalDaten {
             return false;
         $tmp = $this->daten;
         $this->daten = $this->sort_Col($this->get_Col(0));
+
+        $this->daten['datenCols'] = $this->datenCols;
 
         global $page_protect;
         $conf = $page_protect.serialize($this->daten);
