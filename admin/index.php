@@ -21,7 +21,7 @@ class CalAdmin {
     private $PLUGIN_SELF_DIR;
     private $PLUGIN_SELF_URL;
 
-    function CalAdmin($settings,$PLUGIN_SELF_DIR,$PLUGIN_SELF_URL) {
+    function __construct($settings,$PLUGIN_SELF_DIR,$PLUGIN_SELF_URL) {
         $this->PLUGIN_SELF_DIR = $PLUGIN_SELF_DIR;
         $this->PLUGIN_SELF_URL = $PLUGIN_SELF_URL;
 

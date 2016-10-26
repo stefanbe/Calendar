@@ -80,6 +80,7 @@ class CalDaten {
             $this->make_From_Daten_min_max_Year();
             return false;
         }
+        unset($this->daten['datenCols']);
         $this->make_From_Daten_min_max_Year();
         return true;
     }
