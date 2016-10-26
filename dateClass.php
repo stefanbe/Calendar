@@ -68,6 +68,7 @@ class CalDate extends CalDaten {
         $offset_last_day_month = array_search(date("w",mktime(0,0,0,$month,1,$year)),$this->lang['week_days']) - 1;
         $max_days = date("t",strtotime($year."-".$month));
         $week_offset = date("W",strtotime($year."-".$month));
+        $first_week = date("W",strtotime($year."-1"));
         $max_days_prev_month = date("t",strtotime($year."-".($month - 1)));
         $day_month = 1;
         $day_next_month = 1;
@@ -84,6 +85,8 @@ class CalDate extends CalDaten {
                     $day_next_month++;
                 }
             }
+            if($first_week != 1 and $week_offset == $first_week)
+                $week_offset = 0;
         }
         return $weeks;
     }
