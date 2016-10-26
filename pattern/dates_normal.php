@@ -277,8 +277,11 @@ class dates_normal extends CalDate {
         $html .= '</tr>';
         foreach($this->get_WeeksDays($year,$month) as $week_nr => $days) {
             $html .= '<tr>';
-            if($this->para["show_weeknr"])
+            if($this->para["show_weeknr"]) {
+                if(false === array_search(true,$days,true))
+                    $week_nr = "&nbsp;";
                 $html .= '<td class="cal-td cal-week-nr"><div>'.$week_nr.'</div></td>';
+            }
             foreach($days as $day => $is_show) {
                $html .= '<td style="width:14.2857142857%;" class="cal-td">'.$this->help_get_Day($year,$month,$day,$is_show).'</td>';
             }
