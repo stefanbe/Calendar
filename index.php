@@ -127,7 +127,7 @@ class Calendar extends Plugin {
 
         $info = array(
             // Plugin-Name + Version
-            '<b>'.$this->pluginName.'</b> '.$this->adminLang->getLanguageValue("info_revision","10"),
+            '<b>'.$this->pluginName.'</b> '.$this->adminLang->getLanguageValue("info_revision","11"),
             // moziloCMS-Version
             "2.0",
             // Kurzbeschreibung nur <span> und <br /> sind erlaubt
